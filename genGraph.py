@@ -18,7 +18,7 @@ def generateGraph():
 
 
 	positions = nx.get_node_attributes(G, 'pos')
-	plt.figure(figsize=(10,10))
+	plt.figure(figsize=(16,8))
 	nx.draw(G, positions, node_size = [4 for v in G], with_labels = True)
 	plt.show()
 
