@@ -8,7 +8,7 @@ def generateGraph():
 	file = open(filename, "r")
 	for line in file:
 		elmts = [x.strip() for x in line.split(',')]
-		nodeName = elmts[0]
+		nodeName = elmts[4]
 
 		G.add_node(nodeName, pos=(float(elmts[2]), float(elmts[1])))
 
