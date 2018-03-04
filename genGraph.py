@@ -4,13 +4,13 @@ import matplotlib.pyplot as plt
 def generateGraph():
 	G = nx.Graph()
 
-	filename = "countryCoordinates.csv"
+	filename = "iso3CountryCoordinates.csv"
 	file = open(filename, "r")
 	for line in file:
 		elmts = [x.strip() for x in line.split(',')]
-		nodeName = elmts[4]
+		nodeName = elmts[0]			#iso3 country code
 
-		G.add_node(nodeName, pos=(float(elmts[2]), float(elmts[1])))
+		G.add_node(nodeName, pos=(float(elmts[3]), float(elmts[2])))
 
 	#for node in G.nodes():
 	#	for node2 in G.nodes():
