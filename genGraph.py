@@ -5,7 +5,7 @@ def generateGraph():
 	G = nx.Graph()
 
 	filename = "iso3CountryCoordinates.csv"
-	file = open(filename, "r")
+	file = open(filename, "r", encoding='latin-1')
 	for line in file:
 		elmts = [x.strip() for x in line.split(',')]
 		nodeName = elmts[0]			#iso3 country code
