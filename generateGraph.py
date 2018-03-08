@@ -15,6 +15,8 @@ def generateGraph():
 			nodeName = sh.cell(rownum, 0).value		#iso3 code for the node name
 			G.add_node(nodeName, pos=(sh.cell(rownum,2).value, sh.cell(rownum,1).value))
 
+	addEdges(G)
+
 	#for node in G.nodes():
 	#	for node2 in G.nodes():
 	#		G.add_edge(node, node2)
@@ -26,14 +28,20 @@ def generateGraph():
 	plt.show()
 
 
-def addCodes():
+def addEdges(G):
 	directory = "Export Data/2014"
-	for filename in os.listdir(directory):	#scan every file
-		print(filename)
+	for filename in os.listdir(directory):
 		with xlrd.open_workbook(directory + "/" + filename) as workbook:
 			sh = workbook.sheet_by_name('Partner')
 			for rownum in range(1, sh.nrows):
-				print(sh.cell(rownum,5))
+				exporter = sh.cell(rownum, 0).value
+				partner = sh.cell(rownum, 1).value
+
+				if exporter in countryNameDict and partner in countryNameDict:	#only add the edge if it is a valid country
+					u = countryNameDict[exporter]		#exporter
+					v = countryNameDict[partner]		#partner
+					G.add_edge(u, v)
+
 
 #builds the map that links country names from the world bank data files to their iso3 code (the node name)
 def buildCodeMap():	
@@ -46,5 +54,5 @@ def buildCodeMap():
 			countryNameDict[countryName] = code
 
 #addCodes()
-#buildCodeMap()
+buildCodeMap()
 generateGraph()
