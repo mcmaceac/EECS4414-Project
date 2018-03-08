@@ -24,7 +24,13 @@ def generateGraph():
 	for n in countryNameDict.values():
 		printDegrees(G, n)
 
+	saveGraph(G)
+
 	plt.show()
+
+def saveGraph(G):
+	with open("WTW.adjlist", "wb+") as f:
+		nx.write_adjlist(G, f)
 
 
 def addEdges(G):
