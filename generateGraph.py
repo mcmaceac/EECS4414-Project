@@ -17,14 +17,13 @@ def generateGraph():
 
 	addEdges(G)
 
-	#for node in G.nodes():
-	#	for node2 in G.nodes():
-	#		G.add_edge(node, node2)
-
+	#e = [(u,v) for (u,v,d) in G.edges(data=True)]
 
 	positions = nx.get_node_attributes(G, 'pos')
 	plt.figure(figsize=(16,8))
 	nx.draw(G, positions, node_size = [4 for v in G], with_labels = True)
+	#print(G.get_edge_data('CAN', 'USA'))
+	#nx.draw_networkx_edges(G, positions, edgelist=e)
 	plt.show()
 
 
@@ -54,6 +53,5 @@ def buildCodeMap():
 			#print(rownum+1, ": " + code + "," + countryName)
 			countryNameDict[countryName] = code
 
-#addCodes()
 buildCodeMap()
 generateGraph()
