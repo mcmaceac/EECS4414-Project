@@ -22,7 +22,7 @@ def generateGraph():
 	nx.draw(G, positions, node_size = [4 for v in G], with_labels = True)
 
 	for n in countryNameDict.values():
-		printDegree(G, n)
+		printDegrees(G, n)
 
 	plt.show()
 
