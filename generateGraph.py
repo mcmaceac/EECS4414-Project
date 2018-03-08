@@ -7,7 +7,7 @@ countryNameDict = {}
 codeFile = "iso3CountryCoordinates.xlsx"
 
 def generateGraph():
-	G = nx.Graph()
+	G = nx.DiGraph()
 
 	with xlrd.open_workbook(codeFile) as workbook:
 		sh = workbook.sheet_by_name('iso3CountryCoordinates')
