@@ -3,7 +3,7 @@ import xlrd
 import networkx as nx
 import matplotlib.pyplot as plt
 
-countryNameDict = {}
+countryNameDict = {}					#dictionary to map country name to their iso3 code
 codeFile = "iso3CountryCoordinates.xlsx"
 
 def generateGraph():
@@ -17,13 +17,13 @@ def generateGraph():
 
 	addEdges(G)
 
-	#e = [(u,v) for (u,v,d) in G.edges(data=True)]
-
 	positions = nx.get_node_attributes(G, 'pos')
 	plt.figure(figsize=(16,8))
 	nx.draw(G, positions, node_size = [4 for v in G], with_labels = True)
-	#print(G.get_edge_data('CAN', 'USA'))
-	#nx.draw_networkx_edges(G, positions, edgelist=e)
+
+	#for n in countryNameDict.values():
+	#	printDegree(G, n)
+
 	plt.show()
 
 
@@ -52,6 +52,10 @@ def buildCodeMap():
 			countryName = sh.cell(rownum, 3).value
 			#print(rownum+1, ": " + code + "," + countryName)
 			countryNameDict[countryName] = code
+
+def printDegree(G, nodeName):
+	print("In degree of", nodeName, ":", G.in_degree(nodeName))
+	print("Out degree of", nodeName, ":", G.out_degree(nodeName))
 
 buildCodeMap()
 generateGraph()
