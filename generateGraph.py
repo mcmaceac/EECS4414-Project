@@ -40,7 +40,8 @@ def addEdges(G):
 				if exporter in countryNameDict and partner in countryNameDict:	#only add the edge if it is a valid country
 					u = countryNameDict[exporter]		#exporter
 					v = countryNameDict[partner]		#partner
-					G.add_edge(u, v)
+					edgeWeight = sh.cell(rownum, 5).value
+					G.add_edge(u, v, weight=edgeWeight)
 
 
 #builds the map that links country names from the world bank data files to their iso3 code (the node name)
