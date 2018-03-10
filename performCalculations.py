@@ -51,7 +51,7 @@ def components(G):
 			print(comp)
 
 def diameter(G):
-	print("Diameter of the SCC: ", nx.diameter(max(nx.connected_component_subgraphs(G.to_undirected()))))
+	print("Diameter of the SCC: ", nx.diameter(max(nx.strongly_connected_component_subgraphs(G), key=len)))
 
 #method to return the graph with a given filename (adjlist file)
 def loadGraph(fileName):
@@ -64,4 +64,4 @@ G = loadGraph("WTW.adjlist")
 #degreeDistribution(G)
 #clusteringDistribution(G)
 #components(G)
-#diameter(G)
+diameter(G)
