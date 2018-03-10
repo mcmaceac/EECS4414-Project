@@ -38,7 +38,11 @@ def clusteringDistribution(G):
 
 def components(G):
 	for comp in nx.strongly_connected_components(G):
-		print(comp)
+		if len(comp) == 1:
+			elem = comp.pop()
+			print(elem, ": ", G.out_degree(elem))
+		else:
+			print(comp)
 
 #method to return the graph with a given filename (adjlist file)
 def loadGraph(fileName):
