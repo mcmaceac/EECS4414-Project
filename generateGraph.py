@@ -9,12 +9,7 @@ codeFile = "iso3CountryCoordinates.xlsx"
 def generateGraph():
 	G = nx.DiGraph()
 
-	with xlrd.open_workbook(codeFile) as workbook:
-		sh = workbook.sheet_by_name('iso3CountryCoordinates')
-		for rownum in range(0, sh.nrows):
-			nodeName = sh.cell(rownum, 0).value		#iso3 code for the node name
-			G.add_node(nodeName, pos=(sh.cell(rownum,2).value, sh.cell(rownum,1).value))
-
+	addNodes(G)
 	addEdges(G)
 
 	positions = nx.get_node_attributes(G, 'pos')
@@ -32,6 +27,12 @@ def saveGraph(G):
 	with open("WTW.adjlist", "wb+") as f:
 		nx.write_adjlist(G, f)
 
+def addNodes(G):
+	with xlrd.open_workbook(codeFile) as workbook:
+		sh = workbook.sheet_by_name('iso3CountryCoordinates')
+		for rownum in range(0, sh.nrows):
+			nodeName = sh.cell(rownum, 0).value		#iso3 code for the node name
+			G.add_node(nodeName, pos=(sh.cell(rownum,2).value, sh.cell(rownum,1).value))
 
 def addEdges(G):
 	directory = "Export Data/2014"
