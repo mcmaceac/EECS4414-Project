@@ -34,7 +34,13 @@ def degreeDistribution(G):
 	plt.show()
 
 def clusteringDistribution(G):
-	pass
+	clust = nx.clustering(G.to_undirected())
+	
+	plt.ylabel('Clustering Coefficient')
+	plt.xlabel('Country Code')
+	plt.bar(range(len(clust)), clust.values())
+	plt.xticks(range(len(clust)), list(clust.keys()), rotation=90)
+	plt.show()
 
 def components(G):
 	for comp in nx.strongly_connected_components(G):
@@ -43,6 +49,9 @@ def components(G):
 			print(elem, ": ", G.out_degree(elem))
 		else:
 			print(comp)
+
+def diameter(G):
+	print("Diameter of the SCC: ", nx.diameter(max(nx.connected_component_subgraphs(G.to_undirected()))))
 
 #method to return the graph with a given filename (adjlist file)
 def loadGraph(fileName):
@@ -54,4 +63,5 @@ def loadGraph(fileName):
 G = loadGraph("WTW.adjlist")
 #degreeDistribution(G)
 #clusteringDistribution(G)
-components(G)
+#components(G)
+#diameter(G)
