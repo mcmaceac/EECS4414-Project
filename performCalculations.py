@@ -21,13 +21,20 @@ def degreeDistribution(G):
 
 	sortedIn = sorted(countryInDegrees.items(), key=operator.itemgetter(1))
 
+	plt.ylabel('In Degree')
+	plt.xlabel('Country Code')
 	plt.bar(range(len(countryInDegrees)), countryInDegrees.values())
 	plt.xticks(range(len(countryInDegrees)), list(countryInDegrees.keys()), rotation=90)
 	plt.show()
 
+	plt.ylabel('Out Degree')
+	plt.xlabel('Country Code')
 	plt.bar(range(len(countryOutDegrees)), countryOutDegrees.values())
 	plt.xticks(range(len(countryOutDegrees)), list(countryOutDegrees.keys()), rotation=90)
 	plt.show()
+
+def clusteringDistribution(G):
+	pass
 
 #method to return the graph with a given filename (adjlist file)
 def loadGraph(fileName):
