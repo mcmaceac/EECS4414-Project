@@ -36,6 +36,10 @@ def degreeDistribution(G):
 def clusteringDistribution(G):
 	pass
 
+def components(G):
+	for comp in nx.strongly_connected_components(G):
+		print(comp)
+
 #method to return the graph with a given filename (adjlist file)
 def loadGraph(fileName):
 	with open(fileName, "rb") as f:
@@ -44,4 +48,6 @@ def loadGraph(fileName):
 	return G
 
 G = loadGraph("WTW.adjlist")
-degreeDistribution(G)
+#degreeDistribution(G)
+#clusteringDistribution(G)
+components(G)
