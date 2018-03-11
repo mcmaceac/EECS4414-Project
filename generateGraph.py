@@ -27,6 +27,9 @@ def saveGraph(G):
 	with open("WTW.adjlist", "wb+") as f:
 		nx.write_adjlist(G, f)
 
+	with open("WTW.edgelist", "wb+") as f:
+		nx.write_weighted_edgelist(G, f)
+
 def addNodes(G):
 	with xlrd.open_workbook(codeFile) as workbook:
 		sh = workbook.sheet_by_name('iso3CountryCoordinates')
