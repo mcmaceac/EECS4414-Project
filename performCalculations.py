@@ -84,6 +84,10 @@ def components(G):
 def diameter(G):
 	print("Diameter of the SCC: ", nx.diameter(max(nx.strongly_connected_component_subgraphs(G), key=len)))
 
+def SCC(G):
+	for subgraph in nx.strongly_connected_components(G):
+		print(subgraph)
+
 def getEdgeData(G):
 	print(G.edges(data=True))
 
@@ -108,13 +112,14 @@ def buildCodeMap():
 			countryCodeDict[code] = countryName
 
 #G = loadGraph("WTW.adjlist")
-G = loadGraph("WTW2.edgelist")
+G = loadGraph("WTW.edgelist")
 #degreeDistribution(G)
 buildCodeMap()
 #nodeDegrees(G)
-clusteringByNode(G)
+#clusteringByNode(G)
 #clusteringDistribution(G)
 #components(G)
 #diameter(G)
 #detectCommunities(G)
 #getEdgeData(G)
+SCC(G)
