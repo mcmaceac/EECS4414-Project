@@ -10,6 +10,7 @@ import itertools
 codeFile = "iso3CountryCoordinates.xlsx"
 countryInDegrees = {}
 countryOutDegrees = {}
+countryCodeDict = {}
 
 def detectCommunities(G):
 	k = 7 #7 continents
@@ -50,6 +51,13 @@ def degreeDistribution(G):
 	plt.xticks(range(len(countryOutDegrees)), list(countryOutDegrees.keys()), rotation=90)
 	plt.show()
 
+def nodeDegrees(G):
+	with xlrd.open_workbook(codeFile) as workbook:
+		sh = workbook.sheet_by_name('iso3CountryCoordinates')
+		for rownum in range(0, sh.nrows):
+			countryCode = sh.cell(rownum, 0).value		#iso3 code for the node name
+			print(countryCodeDict[countryCode], "+", G.in_degree(countryCode), "+", G.out_degree(countryCode))
+
 def clusteringDistribution(G):
 	clust = nx.clustering(G.to_undirected())
 	
@@ -58,6 +66,12 @@ def clusteringDistribution(G):
 	plt.bar(range(len(clust)), clust.values())
 	plt.xticks(range(len(clust)), list(clust.keys()), rotation=90)
 	plt.show()
+
+def clusteringByNode(G):
+	clust = nx.clustering(G.to_undirected())
+	for code in clust.keys():
+		print(countryCodeDict[code], "+", clust[code])
+
 
 def components(G):
 	for comp in nx.strongly_connected_components(G):
@@ -84,9 +98,21 @@ def loadGraph(fileName):
 			print("Graph loaded from edgelist")
 	return G
 
+def buildCodeMap():	
+	with xlrd.open_workbook(codeFile) as workbook:
+		sh = workbook.sheet_by_name('iso3CountryCoordinates')
+		for rownum in range(0, sh.nrows):
+			code = sh.cell(rownum, 0).value
+			countryName = sh.cell(rownum, 3).value
+			#print(rownum+1, ": " + code + "," + countryName)
+			countryCodeDict[code] = countryName
+
 #G = loadGraph("WTW.adjlist")
 G = loadGraph("WTW2.edgelist")
 #degreeDistribution(G)
+buildCodeMap()
+#nodeDegrees(G)
+clusteringByNode(G)
 #clusteringDistribution(G)
 #components(G)
 #diameter(G)
