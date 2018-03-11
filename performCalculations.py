@@ -1,14 +1,31 @@
 import matplotlib.pyplot as plt
 import networkx as nx
+from networkx.algorithms.community.centrality import girvan_newman
+from networkx import edge_betweenness_centrality as betweenness
 import xlrd
 import operator
+from operator import itemgetter
+import itertools
 
 codeFile = "iso3CountryCoordinates.xlsx"
 countryInDegrees = {}
 countryOutDegrees = {}
 
 def detectCommunities(G):
-	pass
+	k = 7 #7 continents
+	comp = girvan_newman(G, most_valuable_edge=heaviest)
+	limited = itertools.takewhile(lambda c: len(c) <= k, comp)
+	for communities in limited:
+		print(tuple(sorted(c) for c in communities))
+
+def most_central_edge(G):
+	centrality = betweenness(G, weight='weight')
+	return max(centrality, key=centrality.get)
+
+def heaviest(G):
+	u, v, w = max(G.edges(data='weight'), key=itemgetter(2))
+	return (u, v)
+
 
 #calculates the in and out degree distribution
 def degreeDistribution(G):
@@ -53,15 +70,25 @@ def components(G):
 def diameter(G):
 	print("Diameter of the SCC: ", nx.diameter(max(nx.strongly_connected_component_subgraphs(G), key=len)))
 
+def getEdgeData(G):
+	print(G.edges(data=True))
+
 #method to return the graph with a given filename (adjlist file)
 def loadGraph(fileName):
 	with open(fileName, "rb") as f:
-		G = nx.read_adjlist(f, create_using=nx.DiGraph())
-		print("Graph loaded")
+		if fileName.find("edgelist") == -1:
+			G = nx.read_adjlist(f, create_using=nx.DiGraph())
+			print("Graph loaded from adjlist")
+		else:
+			G = nx.read_edgelist(f, data=(('weight', float),), create_using=nx.DiGraph())
+			print("Graph loaded from edgelist")
 	return G
 
-G = loadGraph("WTW.adjlist")
+#G = loadGraph("WTW.adjlist")
+G = loadGraph("WTW2.edgelist")
 #degreeDistribution(G)
 #clusteringDistribution(G)
 #components(G)
-diameter(G)
+#diameter(G)
+#detectCommunities(G)
+#getEdgeData(G)
