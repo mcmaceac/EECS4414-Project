@@ -26,8 +26,9 @@ def getAllPartnersData(year):
                     print(country + " not found")
                     pass
 
+               localPath = "D:\School\EECS4414\Project\Export Data\\" + year + "\\"
                if(not f == ""):
-                    with open(country + ".xlsx", "wb") as code:
+                    with open(localPath + country + ".xlsx", "wb") as code:
                          code.write(f.read())
                link = "";
 def getProductExporOrImportData(year, type):
