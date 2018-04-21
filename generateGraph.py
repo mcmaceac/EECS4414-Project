@@ -6,28 +6,30 @@ import matplotlib.pyplot as plt
 countryNameDict = {}					#dictionary to map country name to their iso3 code
 codeFile = "iso3CountryCoordinates.xlsx"
 
-def generateGraph():
+def generateGraph(year):
 	G = nx.DiGraph()
 
 	addNodes(G)
-	addEdges(G)
+	addEdges(G, year)
 
-	positions = nx.get_node_attributes(G, 'pos')
-	plt.figure(figsize=(16,8))
-	nx.draw(G, positions, node_size = [4 for v in G], with_labels = True)
+	#positions = nx.get_node_attributes(G, 'pos')
+	#plt.figure(figsize=(16,8))
+	#nx.draw(G, positions, node_size = [4 for v in G], with_labels = True)
 
+	'''
 	for n in countryNameDict.values():
 		printDegrees(G, n)
+	'''
+	
+	saveGraph(G, year)
 
-	saveGraph(G)
+	#plt.show()
 
-	plt.show()
-
-def saveGraph(G):
-	with open("WTW.adjlist", "wb+") as f:
+def saveGraph(G, year):
+	with open("graphs/WTW" + year + ".adjlist", "wb+") as f:
 		nx.write_adjlist(G, f)
 
-	with open("WTW.edgelist", "wb+") as f:
+	with open("graphs/WTW" + year + ".edgelist", "wb+") as f:
 		nx.write_weighted_edgelist(G, f)
 
 def addNodes(G):
@@ -37,8 +39,8 @@ def addNodes(G):
 			nodeName = sh.cell(rownum, 0).value		#iso3 code for the node name
 			G.add_node(nodeName, pos=(sh.cell(rownum,2).value, sh.cell(rownum,1).value))
 
-def addEdges(G):
-	directory = "Export Data/2014"
+def addEdges(G, year):
+	directory = "Export Data/" + year
 	for filename in os.listdir(directory):
 		with xlrd.open_workbook(directory + "/" + filename) as workbook:
 			sh = workbook.sheet_by_name('Partner')
@@ -74,4 +76,9 @@ def printDegrees(G, countryCode):
 	print("[",countryCode,"] out: ", outDegree, " in: ", inDegree)
 
 buildCodeMap()
-generateGraph()
+
+years = ["2016"]
+for year in years:
+	print("Generating graph for " + year + "...")
+	generateGraph(year)
+	print("Done generating graph for " + year + "...")
