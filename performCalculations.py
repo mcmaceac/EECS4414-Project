@@ -21,7 +21,12 @@ def detectCommunities(G):
 
 def most_central_edge(G):
 	centrality = betweenness(G, weight='weight')
-	return max(centrality, key=centrality.get)
+	#return max(centrality, key=centrality.get)
+	return sorted(centrality, key=centrality.get, reverse=True)[:5]
+
+def top_pagerank(G):
+	ranks = nx.pagerank(G)
+	return sorted(ranks, key=ranks.get, reverse=True)[:5]
 
 def heaviest(G):
 	u, v, w = max(G.edges(data='weight'), key=itemgetter(2))
@@ -99,7 +104,7 @@ def loadGraph(fileName):
 			print("Graph loaded from adjlist")
 		else:
 			G = nx.read_edgelist(f, data=(('weight', float),), create_using=nx.DiGraph())
-			print("Graph loaded from edgelist")
+			print("Graph " + fileName + " loaded from edgelist")
 	return G
 
 def buildCodeMap():	
@@ -112,14 +117,22 @@ def buildCodeMap():
 			countryCodeDict[code] = countryName
 
 #G = loadGraph("WTW.adjlist")
-G = loadGraph("WTW.edgelist")
+
+years = ["2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2016"]
+
+for year in years:
+	G = loadGraph("graphs/WTW" + year + ".edgelist")
+	#print(G["CAN"]["USA"]['weight'])
+	#print(most_central_edge(G))
+	print(top_pagerank(G))
+
 #degreeDistribution(G)
 buildCodeMap()
 #nodeDegrees(G)
 #clusteringByNode(G)
 #clusteringDistribution(G)
 #components(G)
-#diameter(G)
+
 #detectCommunities(G)
 #getEdgeData(G)
-SCC(G)
+#SCC(G)
