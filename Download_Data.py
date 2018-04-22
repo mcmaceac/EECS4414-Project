@@ -64,7 +64,9 @@ def getProductExporOrImportData(year, type):
                               with open(path + country +"-"+product + ".xlsx", "wb") as code:
                                    code.write(f.read())
                          link = "";
-year = "2010"
+#year = "2008"
 type = "export"
 # getProductExporOrImportData(year, type)
-getAllPartnersData(year)
+years = ["2016"]
+for year in years:
+	getAllPartnersData(year)
