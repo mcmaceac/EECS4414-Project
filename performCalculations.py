@@ -125,6 +125,7 @@ for year in years:
 	#print(G["CAN"]["USA"]['weight'])
 	#print(most_central_edge(G))
 	print(top_pagerank(G))
+	print(G.size(weight='weight'))
 
 #degreeDistribution(G)
 buildCodeMap()
